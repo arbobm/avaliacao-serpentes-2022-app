@@ -24,6 +24,8 @@ ano_passado <- "2011"
 
 proj_albers <- "+proj=aea +lat_0=-12 +lon_0=-54 +lat_1=-2 +lat_2=-22
 +x_0=5000000 +y_0=10000000 +ellps=GRS80 +units=m +no_defs"
+
+
 ## carrega pontos de ocorrencia
 occ <- readxl::read_xlsx("planilhas/Registros_serpentes_avaliacao_2022_v4.xlsx")
 
@@ -56,6 +58,7 @@ combined_distribution_buf <- combined_distribution %>%
   dplyr::mutate(area_km2 = as.numeric(st_area(.))/1000000,
                 tipo = "mpc buffer 10 km") %>% 
   sf::st_transform(crs = 4326)
+
 
 
 ucs <- sf::st_read("shapes/UCsFedIcmb_EstMunicMMA.shp")
@@ -310,47 +313,47 @@ ui <- navbarPage(
   ############ Créditos #############
   ###################################
   
-  tabPanel("Créditos",
-           p("Bruna"),
-           p("Luciana"),
-           p("Alejandro"),
-           p("Carlos"),
-           p("Lara"),
-           
-           br(),
-           br(),
-           br(),
-           br(),
-           
-           # colocar em outra coluna? como?
-           
-           h4(strong("Referências:")),
-           p("ANA. ",
-             a("Base de Dados Nacional de Referência de Massas d'Água.",
-               href="https://metadados.snirh.gov.br/geonetwork/srv/por/catalog.search#/metadata/7d054e5a-8cc9-403c-9f1a-085fd933610c",
-               target="_blank", rel="noopener noreferrer"),
-             "Acesso em: 2 jul. 2021."),
-           p("ICMBIO. ",
-             a("Limites das Unidades de Conservação Federais - shapefile. ",
-               href="https://www.gov.br/icmbio/pt-br/servicos/geoprocessamento/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais",
-               target="_blank", rel="noopener noreferrer"),
-             "Acesso em: 4 maio. 2022. "),
-           p("MMA. ",
-             a("Cadastro Nacional de Unidades de Conservação - Unidades de Conservação do Brasil.",
-               href="http://mapas.mma.gov.br/geonetwork/srv/br/metadata.show?id=1250",
-               target="_blank", rel="noopener noreferrer"),
-             "Acesso em: 4 maio. 2022."),
-           p("PROJETO MAPBIOMAS. ",
-             a("Coleção 6 da série anual de mapas de cobertura e uso de solo do Brasil.",
-               href = "https://mapbiomas.org",
-               target="_blank", rel="noopener noreferrer"),
-             "Acesso em: 30 ago. 2021."),
-           p("PROJETO MAPBIOMAS. ",
-             a("Coleção 7 da série anual de mapas de cobertura e uso de solo do Brasil.",
-               href="https://mapbiomas.org",
-               target="_blank", rel="noopener noreferrer"),
-             "Acesso em: 28 ago. 2022.")
-  ),
+  # tabPanel("Créditos",
+  #          p("Bruna"),
+  #          p("Luciana"),
+  #          p("Alejandro"),
+  #          p("Carlos"),
+  #          p("Lara"),
+  #          
+  #          br(),
+  #          br(),
+  #          br(),
+  #          br(),
+  #          
+  #          # colocar em outra coluna? como?
+  #          
+  #          h4(strong("Referências:")),
+  #          p("ANA. ",
+  #            a("Base de Dados Nacional de Referência de Massas d'Água.",
+  #              href="https://metadados.snirh.gov.br/geonetwork/srv/por/catalog.search#/metadata/7d054e5a-8cc9-403c-9f1a-085fd933610c",
+  #              target="_blank", rel="noopener noreferrer"),
+  #            "Acesso em: 2 jul. 2021."),
+  #          p("ICMBIO. ",
+  #            a("Limites das Unidades de Conservação Federais - shapefile. ",
+  #              href="https://www.gov.br/icmbio/pt-br/servicos/geoprocessamento/mapa-tematico-e-dados-geoestatisticos-das-unidades-de-conservacao-federais",
+  #              target="_blank", rel="noopener noreferrer"),
+  #            "Acesso em: 4 maio. 2022. "),
+  #          p("MMA. ",
+  #            a("Cadastro Nacional de Unidades de Conservação - Unidades de Conservação do Brasil.",
+  #              href="http://mapas.mma.gov.br/geonetwork/srv/br/metadata.show?id=1250",
+  #              target="_blank", rel="noopener noreferrer"),
+  #            "Acesso em: 4 maio. 2022."),
+  #          p("PROJETO MAPBIOMAS. ",
+  #            a("Coleção 6 da série anual de mapas de cobertura e uso de solo do Brasil.",
+  #              href = "https://mapbiomas.org",
+  #              target="_blank", rel="noopener noreferrer"),
+  #            "Acesso em: 30 ago. 2021."),
+  #          p("PROJETO MAPBIOMAS. ",
+  #            a("Coleção 7 da série anual de mapas de cobertura e uso de solo do Brasil.",
+  #              href="https://mapbiomas.org",
+  #              target="_blank", rel="noopener noreferrer"),
+  #            "Acesso em: 28 ago. 2022.")
+  # ),
   
   
   
@@ -555,9 +558,12 @@ server <- function(input, output, session) {
           mudanca <- raster::raster(paste0(
             "serpentes/uso_solo/", input$species, "_uso_wgs84.tif")
           ) 
-          # mudanca <- raster(paste0(
+          # mudanca <- raster::raster(paste0(
           #   "serpentes/uso_solo/", species_list[1], "_uso_wgs84.tif")
-          #   ) 
+          # ) 
+          
+          raster::crs(mudanca) <- "+proj=longlat +datum=WGS84 +no_defs"
+      
           
           
           if(nrow(mudanca)!=0) {
