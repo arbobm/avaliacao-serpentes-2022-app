@@ -6,7 +6,7 @@ if(any(to_install)) {
   install.packages(pacotes[to_install])
 }
 
-
+# setwd("C:/SIG/RAN_homeoffice/Avaliacao/avaliacao-serpentes-2022-app")
 
 library(shiny)
 library(readxl)
@@ -253,7 +253,7 @@ ui <- navbarPage(
                              
                              h5(strong("Potenciais ameaças:")),
                              # checkboxInput("estradas", "Estradas", FALSE),
-                             checkboxInput("irrigacao", "Agricultura irrigada (ano base: 2020)", FALSE),
+                             # checkboxInput("irrigacao", "Agricultura irrigada (ano base: 2020)", FALSE),
                              # checkboxInput("pastagem", "Pastagem (ano base: 2020 - Projeto MapBiomas, 2021)", FALSE),
                              checkboxInput("eolicos", "Parques eólicos (ANEEL, 2021)", FALSE),
                              checkboxInput("ahe", "Aproveitamentos hidrelétricos (ANEEL, 2022)", FALSE),
@@ -955,16 +955,16 @@ server <- function(input, output, session) {
 
       
       # if (input$irrigacao) {
-      #   
-      #   irrigacao2 <- sf::st_filter(irrigacao, combined_distribution_buf %>% 
+      # 
+      #   irrigacao2 <- sf::st_filter(irrigacao, combined_distribution_buf %>%
       #                                 dplyr::filter(species == input$species))
-      #   # irrigacao2 <- sf::st_filter(irrigacao, combined_distribution_buf %>% 
+      #   # irrigacao2 <- sf::st_filter(irrigacao, combined_distribution_buf %>%
       #   #                              dplyr::filter(species == species_list[1]))
-      #   
+      # 
       #   if (nrow(irrigacao2) != 0) {
-      #     
-      #     
-      #     
+      # 
+      # 
+      # 
       #     leafletProxy("map", data = distribution) %>%
       #       addPolygons(
       #         # color = c("#00EE00"),
@@ -983,7 +983,7 @@ server <- function(input, output, session) {
       #         # popup = ~ paste0(nome)
       #         # popup = paste(
       #         #   irrigacao2$classe
-      #         #   
+      #         #
       #         # ),
       #         label = paste(irrigacao2$classe),
       #         labelOptions = labelOptions(noHide = F,
@@ -991,28 +991,28 @@ server <- function(input, output, session) {
       #                                       "font-style" = "bold"
       #                                     ))
       #       )
-      #     
-      #     
+      # 
+      # 
       #   } else {
       #     # colocar texto aqui
-      #     
+      # 
       #     output$irrigacao <- renderText({
-      #       
+      # 
       #       "Não há informações sobre agricultura irrigada aqui."
-      #       
+      # 
       #     })
-      #     
-      #     
+      # 
+      # 
       #   }
-      #   
-      #   
-      #   
-      #   
-      #   
-      #   
-      #   
-      #   
-      #   
+      # 
+      # 
+      # 
+      # 
+      # 
+      # 
+      # 
+      # 
+      # 
       # }
       
       # termina irrigação
