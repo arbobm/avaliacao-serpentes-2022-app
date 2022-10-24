@@ -1,3 +1,13 @@
+pacotes <- c("shiny", "readxl", "dplyr", "stringr", "leaflet", "sf", "readr",
+             "shinybusy", "leaflet.extras", "raster")
+
+to_install <- !pacotes %in% installed.packages()
+if(any(to_install)) {
+  install.packages(pacotes[to_install])
+}
+
+
+
 library(shiny)
 library(readxl)
 library(dplyr)
