@@ -87,7 +87,7 @@ peolicos <- sf::st_make_valid(peolicos) %>%
 
 # reservatorios <- sf::st_read("C:/Users/bruna/OneDrive/01_BaseSIG/Brasil/ANA/geoft_bho_massa_dagua_v2019/geoft_bho_massa_dagua_v2019_art_wgs.shp")
 
-ahe <- st_read("shapes/atividades/Aproveitamento_Hidrelétricos_AHE.shp")
+ahe <- st_read("shapes/atividades/Aproveitamento_Hidreletricos_AHE.shp")
 ahe <- st_transform(ahe, crs = st_crs(combined_distribution))
 
 
