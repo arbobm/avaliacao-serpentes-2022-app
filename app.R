@@ -1,5 +1,5 @@
 pacotes <- c("shiny", "readxl", "dplyr", "stringr", "leaflet", "sf", "readr",
-             "shinybusy", "leaflet.extras", "raster")
+             "shinybusy", "leaflet.extras", "raster", "rgdal")
 
 to_install <- !pacotes %in% installed.packages()
 if(any(to_install)) {
@@ -18,6 +18,7 @@ library(readr)
 library(shinybusy)
 library(leaflet.extras)
 library(raster)
+library(rgdal)
 
 ano_atual <- "2021"
 ano_passado <- "2011"
@@ -462,6 +463,14 @@ server <- function(input, output, session) {
         
         fitBounds(bbox[1], bbox[2], bbox[3], bbox[4])
       
+      output$eolicos <- renderText({
+        
+      })
+      
+      output$ahe <- renderText({
+        
+      })
+      
       
       
       if(input$pontos){
@@ -571,7 +580,7 @@ server <- function(input, output, session) {
               addRasterImage(
                 mudanca,
                 colors = c(
-                  # "transparent",
+                  "transparent",
                   "palegoldenrod",
                   "red",
                   "green",
@@ -752,6 +761,8 @@ server <- function(input, output, session) {
       }
       
       
+      # começa eolicos ----------------------------------------------------------
+
       if (input$eolicos) {
         
         peolicos2 <- st_filter(peolicos, combined_distribution_buf %>% 
@@ -801,6 +812,8 @@ server <- function(input, output, session) {
         }  
         
       }
+      
+      # termina eolicos
       
       
       # começa reservatorios ----------------------------------------------------
